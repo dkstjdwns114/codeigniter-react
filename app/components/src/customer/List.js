@@ -54,10 +54,13 @@ export default class List extends Component {
                       {" "}
                       Edit{" "}
                     </Link>
-                    <Link to="#" class="btn btn-danger">
+                    <button
+                      class="btn btn-danger"
+                      onClick={() => this.onClickDelete(idx, data.id)}
+                    >
                       {" "}
                       Delete{" "}
-                    </Link>
+                    </button>
                   </td>
                 </tr>
               );
@@ -66,5 +69,21 @@ export default class List extends Component {
         </table>
       </section>
     );
+  }
+  onClickDelete(idx, id) {
+    let yes = confirm("Are you sure to delete this item?");
+    if (yes === true) {
+      const urlDelete = `http://localhost:8080/api/customer/delete/${id}`;
+
+      axios.delete(urlDelete).then((response) => {
+        const res = response.data;
+        if (res.success) {
+          alert(res.message);
+          const list = this.state.listCustomer;
+          list.splice(idx, 1);
+          this.setState({ listCustomer: list });
+        }
+      });
+    }
   }
 }
