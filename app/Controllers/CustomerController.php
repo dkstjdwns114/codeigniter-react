@@ -58,7 +58,26 @@ class CustomerController extends Controller
       $response['message'] = $e->getMessage();
       return json_encode($response);
     }
+  }
 
+  public function update($id)
+  {
+    try {
+      $json = $this->request->getJSON();
+      $update['name'] = $json->name;
+      $update['email'] = $json->email;
+      $update['phone'] = $json->phone;
+      $update['address'] = $json->address;
+      $res = $this->customer->update($id, $update);
+      $response['res'] = $res;
+      $response['success'] = true;
+      $response['message'] = "Successful update";
+      return json_encode($response);
+    } catch (\Exception $e) {
+      $response['success'] = false;
+      $response['message'] = $e->getMessage();
+      return json_encode($response);
+    }
   }
 
   public function create()
