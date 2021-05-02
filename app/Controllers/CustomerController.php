@@ -19,8 +19,7 @@ class CustomerController extends Controller
 
   public function test()
   {
-    // $data = $this->customer->findAll();
-    print_r($this->customer);
-    // return json_encode($data);
+    $data = $this->customer->findAll();
+    return json_encode($data);
   }
 }
