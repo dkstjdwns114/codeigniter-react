@@ -1,17 +1,26 @@
 <?php namespace App\Controllers;
 
 use CodeIgniter\Controller;
+use App\Models\CustomerModel;
 
 class CustomerController extends Controller
 {
+  protected $customer;
 
-  function __construct()
+  public function __construct()
   {
-    // code...
+    $this->customer = new CustomerModel();
   }
 
   public function index()
   {
     return view('customer');
+  }
+
+  public function test()
+  {
+    // $data = $this->customer->findAll();
+    print_r($this->customer);
+    // return json_encode($data);
   }
 }
