@@ -39,6 +39,7 @@ $routes->get('/customer/form', 'CustomerController::index');
 $routes->get('/customer/edit/(:num)', 'CustomerController::index');
 $routes->get('/api/customer/test', 'CustomerController::test');
 $routes->post('/api/customer/create', 'CustomerController::create');
+$routes->get('/api/customer/list', 'CustomerController::list');
 
 /*
  * --------------------------------------------------------------------
