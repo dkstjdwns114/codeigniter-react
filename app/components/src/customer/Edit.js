@@ -24,6 +24,7 @@ export default class Edit extends Component {
         if (res.success) {
           console.log(res.data);
           this.setState({
+            id: res.data.id,
             fieldName: res.data.name,
             fieldEmail: res.data.email,
             fieldAddress: res.data.address,
@@ -105,12 +106,37 @@ export default class Edit extends Component {
 
         <div class="row">
           <div class="col-md-6 mb-3">
-            <button class="btn btn-primary btn-block" type="submit">
+            <button
+              class="btn btn-primary btn-block"
+              type="submit"
+              onClick={() => this.onClickUpdate()}
+            >
               Save
             </button>
           </div>
         </div>
       </div>
     );
+  }
+
+  onClickUpdate() {
+    const id = this.state.id;
+    const baseUrl = `http://localhost:8080/api/customer/update/${id}`;
+
+    const data = {
+      name: this.state.fieldName,
+      email: this.state.fieldEmail,
+      phone: this.state.fieldPhone,
+      address: this.state.fieldAddress,
+    };
+
+    axios
+      .put(baseUrl, data)
+      .then((response) => {
+        alert(response.data.message);
+      })
+      .catch((error) => {
+        alert("Error " + error);
+      });
   }
 }
