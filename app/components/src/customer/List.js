@@ -1,5 +1,28 @@
 import React, { Component } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
 export default class List extends Component {
+  constructor() {
+    super();
+    this.state = {
+      listCustomer: [],
+    };
+  }
+
+  componentDidMount() {
+    console.log("Mounted Component List");
+    axios
+      .get("http://localhost:8080/api/customer/list")
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ listCustomer: response.data.data });
+      })
+      .catch((error) => {
+        alert("Error ==> " + error);
+      });
+  }
+
   render() {
     return (
       <section>
@@ -15,57 +38,30 @@ export default class List extends Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>John Doe</td>
-              <td>john@example.com</td>
-              <td>California Cll 100</td>
-              <td>3101111111</td>
-              <td>
-                <a href="#" class="btn btn-light">
-                  {" "}
-                  Edit{" "}
-                </a>
-                <a href="#" class="btn btn-danger">
-                  {" "}
-                  Delete{" "}
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>John Doe</td>
-              <td>john@example.com</td>
-              <td>California Cll 100</td>
-              <td>3101111111</td>
-              <td>
-                <a href="#" class="btn btn-light">
-                  {" "}
-                  Edit{" "}
-                </a>
-                <a href="#" class="btn btn-danger">
-                  {" "}
-                  Delete{" "}
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>John Doe</td>
-              <td>john@example.com</td>
-              <td>California Cll 100</td>
-              <td>3101111111</td>
-              <td>
-                <a href="#" class="btn btn-light">
-                  {" "}
-                  Edit{" "}
-                </a>
-                <a href="#" class="btn btn-danger">
-                  {" "}
-                  Delete{" "}
-                </a>
-              </td>
-            </tr>
+            {this.state.listCustomer.map((data, idx) => {
+              return (
+                <tr key={data.name + data.address}>
+                  <th scope="row">{idx + 1}</th>
+                  <td>{data.name}</td>
+                  <td>{data.email}</td>
+                  <td>{data.address}</td>
+                  <td>{data.phone}</td>
+                  <td>
+                    <Link
+                      to={"/customer/edit/" + data.id}
+                      class="btn btn-light"
+                    >
+                      {" "}
+                      Edit{" "}
+                    </Link>
+                    <Link to="#" class="btn btn-danger">
+                      {" "}
+                      Delete{" "}
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </section>
