@@ -43,7 +43,7 @@ export default class Edit extends Component {
 
     return (
       <div>
-        <h4>Edit customer {userId} </h4>
+        <h4>Edit customer</h4>
         <hr />
         <div class="row">
           <div class="col-md-6 mb-3">
