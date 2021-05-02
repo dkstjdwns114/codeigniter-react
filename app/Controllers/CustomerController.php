@@ -80,6 +80,21 @@ class CustomerController extends Controller
     }
   }
 
+  public function delete($id)
+  {
+    try {
+      $res = $this->customer->delete($id);
+      $response['res'] = $res;
+      $response['success'] = true;
+      $response['message'] = "Successful delete";
+      return json_encode($response);
+    } catch (\Exception $e) {
+      $response['success'] = false;
+      $response['message'] = $e->getMessage();
+      return json_encode($response);
+    }
+  }
+
   public function create()
   {
     try {
