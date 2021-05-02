@@ -1,6 +1,41 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 export default class Edit extends Component {
+  constructor() {
+    super();
+    this.state = {
+      id: 0,
+      fieldName: "",
+      fieldEmail: "",
+      fieldAddress: "",
+      fieldPhone: "",
+    };
+  }
+
+  componentDidMount() {
+    const user_id = this.props.match.params.id;
+    const url = `http://localhost:8080/api/customer/get/${user_id}`;
+
+    axios
+      .get(url)
+      .then((response) => {
+        const res = response.data;
+        if (res.success) {
+          console.log(res.data);
+          this.setState({
+            fieldName: res.data.name,
+            fieldEmail: res.data.email,
+            fieldAddress: res.data.address,
+            fieldPhone: res.data.phone,
+          });
+        }
+      })
+      .catch((error) => {
+        alert("Error 500 " + error);
+      });
+  }
+
   render() {
     // for get params id from url route
     let userId = this.props.match.params.id;
@@ -12,7 +47,14 @@ export default class Edit extends Component {
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="firstName">Name customer</label>
-            <input type="text" class="form-control" />
+            <input
+              type="text"
+              class="form-control"
+              value={this.state.fieldName}
+              onChange={(event) =>
+                this.setState({ fieldName: event.target.value })
+              }
+            />
           </div>
         </div>
 
@@ -23,6 +65,10 @@ export default class Edit extends Component {
               type="email"
               class="form-control"
               placeholder="you@example.com"
+              value={this.state.fieldEmail}
+              onChange={(event) =>
+                this.setState({ fieldEmail: event.target.value })
+              }
             />
           </div>
         </div>
@@ -34,6 +80,10 @@ export default class Edit extends Component {
               type="text"
               class="form-control"
               placeholder="1234 Main St"
+              value={this.state.fieldAddress}
+              onChange={(event) =>
+                this.setState({ fieldAddress: event.target.value })
+              }
             />
           </div>
         </div>
@@ -41,7 +91,15 @@ export default class Edit extends Component {
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="address">Phone </label>
-            <input type="text" class="form-control" placeholder="123467890" />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="123467890"
+              value={this.state.fieldPhone}
+              onChange={(event) =>
+                this.setState({ fieldPhone: event.target.value })
+              }
+            />
           </div>
         </div>
 
