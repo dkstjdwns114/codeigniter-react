@@ -34,6 +34,9 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('/customer', 'CustomerController::index');
+$routes->get('/customer/index', 'CustomerController::index');
+$routes->get('/customer/form', 'CustomerController::index');
+$routes->get('/customer/edit/(:num)', 'CustomerController::index');
 
 /*
  * --------------------------------------------------------------------
